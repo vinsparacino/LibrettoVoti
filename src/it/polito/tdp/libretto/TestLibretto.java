@@ -23,11 +23,28 @@ public class TestLibretto {
 		System.out.println(venticinque);
 		
 		Voto a1 = libr.cercaEsame("Analisi I");
-		Voto a3 = libr.cercaEsame("Analisi III");
+		Voto a3 = libr.cercaEsame("Analisi II");
 		System.out.println(a1);
 		System.out.println(a3);
 		
+		Voto giusto = new Voto(18, "Geometria", LocalDate.now());
+		Voto sbagliato = new Voto(28, "Geometria", LocalDate.now());
+		Voto mancante = new Voto(30, "Merendine", LocalDate.now());
+		System.out.format("Il voto %s è %s\n", giusto.toString(), libr.esisteGiaVoto(giusto));
+		System.out.format("Il voto %s è %s\n", sbagliato.toString(), libr.esisteGiaVoto(sbagliato));
+		System.out.format("Il voto %s è %s\n", mancante.toString(), libr.esisteGiaVoto(mancante));
+		
 	
+		System.out.format("Il voto %s è in conflitto %s\n", giusto.toString(), libr.votoConflitto(giusto));
+		System.out.format("Il voto %s è in conflitto %s\n", sbagliato.toString(), libr.votoConflitto(sbagliato));
+		System.out.format("Il voto %s è in conflitto %s\n", mancante.toString(), libr.votoConflitto(mancante));
+		
+		System.out.println(libr.add(giusto));
+		System.out.println(libr.add(sbagliato));
+		System.out.println(libr.add(mancante));
+		
+		System.out.println(libr.toString());
+		
 	}
 
 }

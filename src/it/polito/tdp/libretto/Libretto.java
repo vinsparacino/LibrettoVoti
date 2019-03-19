@@ -14,10 +14,17 @@ public class Libretto {
 	/* Aggiunge un nuovo voto al libretto
 	 * 
 	 * @param v il {@link Voto} da aggiungere
+	 * @return {@code true} nel caso normale, {@code false}nel caso non sia riuscito ad aggiungere il voto.
 	 */
 		
-	public void add(Voto v) {
-		voti.add(v);
+	public boolean add(Voto v) {
+		if(!this.esisteGiaVoto(v) && !this.votoConflitto(v)) {
+		   voti.add(v);
+		   return true;
+		}
+		else {
+			return false;
+		}
 		
 	}
 	/* Seleziona il sottoinsieme di voti che hanno il punteggio specificato
@@ -42,11 +49,48 @@ public class Libretto {
 	 */
 	
 	public Voto cercaEsame(String nomeEsame) {
-		for(Voto v : this.voti)
-			if(v.getCorso().equals(nomeEsame))
-				return v;
-		return null;
+		Voto voto = new Voto(0, nomeEsame, null); //costruisco un oggetto voto(falsato) solo per avere un criterio di ricerca.
+		int pos = this.voti.indexOf(voto);
+		if(pos==-1)
+			return null;
+		else 
+			return this.voti.get(pos);
 	}
-
+	/*
+	 * data un voto {@link Voto}, determina se esiste già un voto con uguale
+	 * corso ed punteggio.
+	 * @param v
+	 * @return{@code true}, se ha trovato un corso e punteggio uguali
+	 *        {@code false}, se non ha trovato il corso, oppure {@code null} se non esiste 
+	 */
+	public boolean esisteGiaVoto(Voto v) {
+		int pos = this.voti.indexOf(v);
+		if(pos==-1)
+			return false;
+		else 
+			return (v.getPunti()==this.voti.get(pos).getPunti());
+				
+		
+	}	
+	/*
+	 * Mi dice se il {@link Voto} {@code v} è in conflitto con uno dei voti esistenti. 
+	 * Se il voto è in conflitto restituisce true
+	 * se non lo è false
+	 */
+	
+	public boolean votoConflitto(Voto v) {
+		int pos = this.voti.indexOf(v);
+		if(pos==-1)
+			return false;
+		else 
+			return (v.getPunti()!=this.voti.get(pos).getPunti());
+				
+		
+	}
+	
+	
 	
 }
+
+	
+
